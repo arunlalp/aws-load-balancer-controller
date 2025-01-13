@@ -1,0 +1,41 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: dev-ingress
+  namespace: dev
+  annotations:
+    alb.ingress.kubernetes.io/target-type: instance
+spec:
+  ingressClassName: dev-ingress-class
+  rules:
+    - host: dev.techiescamp.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: dev
+                port:
+                  number: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: prod-ingress
+  namespace: prod
+  annotations:
+    alb.ingress.kubernetes.io/target-type: instance
+spec:
+  ingressClassName: prod-ingress-class
+  rules:
+    - host: prod.techiescamp.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: httpd
+                port:
+                  number: 80

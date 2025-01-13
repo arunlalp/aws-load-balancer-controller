@@ -1,0 +1,32 @@
+apiVersion: elbv2.k8s.aws/v1beta1
+kind: IngressClassParams
+metadata:
+  name: dev-class-params
+spec:
+  namespaceSelector:        
+    matchLabels:
+      kubernetes.io/metadata.name: dev
+  scheme: internet-facing
+  ipAddressType: ipv4
+  loadBalancerAttributes:
+  - key: deletion_protection.enabled
+    value: "true"
+  - key: idle_timeout.timeout_seconds
+    value: "120"
+
+---
+apiVersion: elbv2.k8s.aws/v1beta1
+kind: IngressClassParams
+metadata:
+  name: prod-class-params
+spec:
+  namespaceSelector:        
+    matchLabels:
+      kubernetes.io/metadata.name: prod
+  scheme: internet-facing
+  ipAddressType: ipv4
+  loadBalancerAttributes:
+  - key: deletion_protection.enabled
+    value: "true"
+  - key: idle_timeout.timeout_seconds
+    value: "120"
